@@ -1,6 +1,7 @@
 import PySimpleGUI as psg
 import os
 import pickle
+import pandas as pd
 
 
 # check sentiment analysis and other RMP data
@@ -39,8 +40,23 @@ def course_eval():
 
 
 # check grade distributions
-def grade_distribution(prof_firstname, prof_lastname, course_prefix, course_number, year, semester):
-    print(prof_lastname, course_prefix, course_number, year, semester)
+def grade_distribution(prof_lastname, course_prefix, course_number, year, semester):
+    # get csv file name
+    file_name = year.split('-')[0] + "_" + year.split('-')[1] + ".csv"
+
+    # get path
+    curr_directory = os.path.dirname(os.path.realpath(__file__))
+    grade_data_path = os.path.join(curr_directory, 'grade_distribution/data/')
+    file_path = os.path.join(grade_data_path, file_name)
+
+    # import data into pandas and look at selected semester
+    df = pd.read_csv(file_path, encoding='utf-16le', on_bad_lines='skip', sep='\t')
+    sem_df = df[df.Semester.str.contains(semester, na=False)]
+
+    # grab info from df and plot it!
+    # TODO: data plotting
+
+    # need to use plt.show(block=False) when displaying data
 
 
 # configure GUI
@@ -89,7 +105,7 @@ def create_gui():
 
     # Course Evaluation
     course_eval_title = psg.Text('Course Evaluation', justification='center', expand_x=True)
-    course_eval_button = psg.Button("View Professor Course Evaluation", button_color='light blue')
+    course_eval_button = psg.Button("View Course Evaluations", button_color='light blue')
     course_eval_result = psg.Text('cade course eval results go here', text_color='grey30')
 
     # grade distribution
@@ -143,11 +159,11 @@ def create_gui():
     # event handling
     while True:
         event, values = window.read()
-        print(event, values)
+        # print(event, values)
         if event in (None, 'Exit'):
             break
 
-        # sentiment
+        # sentiment / RMP stuff
         elif event == sentiment_button.get_text():
             try:
                 prof_dict = sentiment(values['professor_firstname'], values['professor_lastname'])
@@ -164,7 +180,13 @@ def create_gui():
                 num_reviews_val.update(str(prof_dict['Number of Reviews']))
                 other_courses_val.update(', '.join(set(prof_dict['Other Courses Taught'])))
             except:
+                # if any errors occur, display error msg
                 sentiment_error_msg.update("Error! No data found...")
+                sentiment_val.update('')
+                quality_val.update('')
+                difficulty_val.update('')
+                num_reviews_val.update('')
+                other_courses_val.update('')
 
         # evaluation
         elif event == course_eval_button.get_text():
@@ -172,7 +194,7 @@ def create_gui():
 
         # grade distribution
         elif event == grade_distribution_button.get_text():
-            grade_distribution(values['professor_firstname'], values['professor_lastname'], values['course_prefix'],
+            grade_distribution(values['professor_lastname'], values['course_prefix'],
                                values['course_number'], values['year'], values['semester'])
 
     window.close()
