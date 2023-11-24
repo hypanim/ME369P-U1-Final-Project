@@ -18,6 +18,8 @@ def read_data(file_name):
     # semester name, course prefix, course number,
     print(df.head)
 
+    print(df.columns.tolist())
+
 
 read_data('2022_2023.csv')
 
