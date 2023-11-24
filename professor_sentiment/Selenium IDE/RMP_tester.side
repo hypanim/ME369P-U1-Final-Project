@@ -1,0 +1,57 @@
+{
+  "id": "449340f6-a76f-49f5-8d2e-cb9644b581ac",
+  "version": "2.0",
+  "name": "RMP_tester",
+  "url": "https://www.ratemyprofessors.com",
+  "tests": [{
+    "id": "d22aa616-025d-4c94-b0cc-090359715d93",
+    "name": "rmp select test",
+    "commands": [{
+      "id": "ac9e6386-0d43-4bab-a6da-78658d072ab9",
+      "comment": "",
+      "command": "open",
+      "target": "/professor/2162820",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f59606b-3720-4018-8c21-10ac8f4db90f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1312x1122",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5090296d-d572-491e-8500-08aa858036ef",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(1) .Rating__RatingBody-sc-1rhvpxz-0",
+      "targets": [
+        ["css=li:nth-child(1) .Rating__RatingBody-sc-1rhvpxz-0", "css:finder"],
+        ["xpath=//ul[@id='ratingsList']/li/div/div", "xpath:idRelative"],
+        ["xpath=//li/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9769dc15-f1e2-4f21-8f46-893f95732d79",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(2) .Comments__StyledComments-dzzyvm-0",
+      "targets": [
+        ["css=li:nth-child(2) .Comments__StyledComments-dzzyvm-0", "css:finder"],
+        ["xpath=//ul[@id='ratingsList']/li[2]/div/div/div[3]/div[3]", "xpath:idRelative"],
+        ["xpath=//li[2]/div/div/div[3]/div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "2a6756c0-990b-46b7-be2f-2e583a863792",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["d22aa616-025d-4c94-b0cc-090359715d93"]
+  }],
+  "urls": ["https://www.ratemyprofessors.com/"],
+  "plugins": []
+}
