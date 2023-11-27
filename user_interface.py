@@ -151,7 +151,7 @@ def grade_distribution(prof_firstname, prof_lastname, course_prefix, course_numb
 
     # plot the results!
     x_pos = [1,2,3,4,5,6,7,8,9,10]
-    grade_colors = ["limegreen","limegreen","orange","orange","orange","red","red","red","grey"]
+    grade_colors = ["limegreen","limegreen","gold","gold","gold","orange","orange","orange","red","grey"]
 
     plt.figure()
     plt.bar(x_pos, grade_freq, color = grade_colors)
