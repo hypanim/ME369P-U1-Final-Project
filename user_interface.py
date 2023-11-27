@@ -4,6 +4,44 @@ import pickle
 import pandas as pd
 import re
 import statistics
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl.use('Qt5Agg')
+
+# load scraped course evaluation data into a pandas dataframe
+def load_course_data():
+    # get file path
+    curr_directory = os.path.dirname(os.path.realpath(__file__))
+    course_eval_dir = os.path.join(curr_directory, 'course_evaluation/data/')
+
+    # helper function
+    def course_number_regex(s):
+        match = re.compile(r'(\d+)').search(s)
+        return [s[:match.start()], s[match.start():]]
+
+    # open the file and grab data
+    eval_list = []
+
+    for subdir, dirs, files in os.walk(course_eval_dir):
+        for file in files:
+            with open(os.path.join(subdir, file), encoding="UTF8") as f:
+                for line in f:
+                    d = eval(line)
+                    # instructor data
+                    instructor_dict = d['InstructorData'][0]
+                    course = course_number_regex(instructor_dict['Course Number'])
+                    year_sem = instructor_dict['Semester'].split(" ")
+
+                    eval_list.append([instructor_dict['Last Name'], instructor_dict['First Name'], course[0], course[1],
+                                      instructor_dict['Unique Number'], year_sem[0], year_sem[1], d['Table1'],
+                                      d['Table2'],
+                                      d['Table3']])
+    # place into pandas df
+    df_columns = ["lastname", "firstname", "course_prefix", "course_number", "unique_number", "semester", "year",
+                  "table1", "table2", "table3"]
+
+    global course_eval_df
+    course_eval_df = pd.DataFrame(eval_list, columns=df_columns)
 
 
 # check sentiment analysis and other RMP data
@@ -44,35 +82,9 @@ def sentiment(prof_firstname, prof_lastname):
 
 # check course evaluations
 def course_eval(prof_firstname, prof_lastname, course_prefix, course_number):
-    # get file path
-    curr_directory = os.path.dirname(os.path.realpath(__file__))
-    course_eval_file = os.path.join(curr_directory, 'course_evaluation/instructor_data1a.txt')
-
-    # helper function
-    def course_number_regex(s):
-        return list(filter(None, re.split(r'(\d+)', s)))
-
-    # open the file and grab data
-    eval_list = []
-    with open(course_eval_file, encoding="UTF8") as f:
-        for line in f:
-            d = eval(line)
-            # instructor data
-            instructor_dict = d['InstructorData'][0]
-            course = course_number_regex(instructor_dict['Course Number'])
-            year_sem = instructor_dict['Semester'].split(" ")
-
-            eval_list.append([instructor_dict['Last Name'], instructor_dict['First Name'], course[0], course[1],
-                              instructor_dict['Unique Number'], year_sem[0], year_sem[1], d['Table1'], d['Table2'],
-                              d['Table3']])
-    # place into pandas df
-    df_columns = ["lastname", "firstname", "course_prefix", "course_number", "unique_number", "semester", "year",
-                  "table1", "table2", "table3"]
-    df = pd.DataFrame(eval_list, columns=df_columns)
-
     # grab respective data
-    prof_df = df[(df['lastname'] == prof_lastname) & (df['firstname'] == prof_firstname) &
-                 (df['course_prefix'] == course_prefix) & (df['course_number'] == course_number)]
+    prof_df = course_eval_df[(course_eval_df['lastname'] == prof_lastname) & (course_eval_df['firstname'] == prof_firstname) &
+                 (course_eval_df['course_prefix'] == course_prefix) & (course_eval_df['course_number'] == course_number)]
 
     # grab table data and place in dict
     rating_dict = {"instructor_rating": [], "course_rating": [], "workload_rating": []}
@@ -85,14 +97,32 @@ def course_eval(prof_firstname, prof_lastname, course_prefix, course_number):
         rating_dict['course_rating'].append(float(table2_dict['T2 Question 2 Score']))
         rating_dict['workload_rating'].append(float(table3_dict['Workload Score (5 = Highest, 1 = Lowest)']))
 
-    # raw data
+    # get raw data
     raw_data = prof_df.to_string()
-    # return the rating_dict
+
     return raw_data, rating_dict
 
 
-# check grade distributions
-def grade_distribution(prof_lastname, course_prefix, course_number, year, semester):
+# get unique number helper function
+def get_unique_num(prof_firstname, prof_lastname, course_prefix, course_number, semester, yr):
+    # match to regex
+    # only checking lastname, no first currently
+    unique_num_df = course_eval_df[
+        (course_eval_df['lastname'] == prof_lastname) & (course_eval_df['firstname'] == prof_firstname) &
+        (course_eval_df['course_prefix'] == course_prefix) & (course_eval_df['course_number'] == course_number) &
+        (course_eval_df['semester'] == semester) & (course_eval_df['year'] == yr)]
+
+    return unique_num_df['unique_number'].iloc[0]
+
+# plot some grade distributions
+def grade_distribution(prof_firstname, prof_lastname, course_prefix, course_number, year, semester):
+    # use helper func to get the unique number
+    if semester == 'Fall':
+        yr = year.split('-')[0]
+    else:
+        yr = year.split('-')[1]
+    unique_number = get_unique_num(prof_firstname, prof_lastname, course_prefix, course_number, semester, yr)
+
     # get csv file name
     file_name = year.split('-')[0] + "_" + year.split('-')[1] + ".csv"
 
@@ -101,14 +131,39 @@ def grade_distribution(prof_lastname, course_prefix, course_number, year, semest
     grade_data_path = os.path.join(curr_directory, 'grade_distribution/data/')
     file_path = os.path.join(grade_data_path, file_name)
 
-    # import data into pandas and look at selected semester
-    df = pd.read_csv(file_path, encoding='utf-16le', on_bad_lines='skip', sep='\t')
-    sem_df = df[df.Semester.str.contains(semester, na=False)]
+    # populate df
+    grade_df = pd.read_csv(file_path, encoding='utf-16le', on_bad_lines='skip', sep='\t')
 
-    # grab info from df and plot it!
-    # TODO: data plotting
+    # convert unique number to string column
+    grade_df['Section Number'] = grade_df['Section Number'].astype(str)
 
-    # need to use plt.show(block=False) when displaying data
+    # grades list
+    letter_grades = ["A", "A-", "B+", "B", "B-", "C+", "C", "C-", "F", "Other"]
+    grade_freq = []
+
+    # get frequency count for each grade
+    for g in letter_grades:
+        search_df = grade_df[(grade_df['Section Number'] == unique_number) & (grade_df['Letter Grade'] == g)]
+        if search_df.empty:
+            grade_freq.append(0)
+        else:
+            grade_freq.append(search_df['Count of letter grade'].iloc[0])
+
+    # plot the results!
+    x_pos = [1,2,3,4,5,6,7,8,9,10]
+    grade_colors = ["limegreen","limegreen","orange","orange","orange","red","red","red","grey"]
+
+    plt.figure()
+    plt.bar(x_pos, grade_freq, color = grade_colors)
+    plt.xticks(x_pos, letter_grades)
+
+    plt.xlabel("Letter Grade")
+    plt.ylabel("Frequency")
+
+    plot_title = "{p} {pre}{num} ({s} {y})".format(p=prof_lastname, pre=course_prefix, num=course_number, s=semester,y=yr)
+    plt.title(plot_title)
+
+    plt.show(block=False)
 
 
 # configure GUI
@@ -141,7 +196,7 @@ def create_gui():
     sentiment_title = psg.Text('Sentiment Analysis (via RateMyProfessor)', justification='center', expand_x=True)
     sentiment_button = psg.Button("View Professor Data", button_color='pale green')
     sentiment_error_msg = psg.Text('', text_color='dark red')
-    sentiment_raw_button = psg.Button("View Raw RMP Data",button_color = 'grey')
+    sentiment_raw_button = psg.Button("View Raw RMP Data", button_color='grey')
     sentiment_raw_data = ''
 
     # professor specific info
@@ -160,7 +215,7 @@ def create_gui():
     # Course Evaluation
     course_eval_title = psg.Text('Course Evaluation', justification='center', expand_x=True)
     course_eval_button = psg.Button("View Course Evaluations", button_color='light blue')
-    course_raw_button = psg.Button("View Raw CIS Data", button_color = 'grey')
+    course_raw_button = psg.Button("View Raw CIS Data", button_color='grey')
     eval_raw_data = ''
 
     # ratings
@@ -174,6 +229,7 @@ def create_gui():
 
     # grade distribution
     grade_title = psg.Text('Grade Distributions', justification='center', expand_x=True)
+    grade_error = psg.Text('', text_color = 'dark red')
 
     years = ['2010-2011', '2011-2012', '2012-2013', '2013-2014', '2014-2015', '2015-2016', '2016-2017', '2017-2018',
              '2018-2019', '2019-2020', '2020-2021', '2021-2022', '2022-2023']
@@ -207,7 +263,7 @@ def create_gui():
         [grade_title],  # grade distribution (dylan)
         [year_prompt, year_combo],
         [semester_prompt, semester_combo],
-        [grade_distribution_button],
+        [grade_distribution_button, grade_error],
         [psg.Text('', size=(1, 1))],  # blank line
         [sentiment_title],  # sentiment (josh)
         [sentiment_button, sentiment_error_msg],
@@ -258,6 +314,7 @@ def create_gui():
                 num_reviews_val.update('')
                 other_courses_val.update('')
 
+        # raw data for sentiment
         elif event == sentiment_raw_button.get_text():
             print("getting here?")
             psg.popup_scrolled(sentiment_raw_data, title='RateMyProfessor Raw Data')
@@ -267,8 +324,8 @@ def create_gui():
             # variables: prof_firstname, prof_lastname, course_prefix, course_number
             try:
                 raw_data, instructor_dict = course_eval(values['professor_firstname'], values['professor_lastname'],
-                                              values['course_prefix'],
-                                              values['course_number'])
+                                                        values['course_prefix'],
+                                                        values['course_number'])
                 instructor_error_msg.update('')
 
                 # update values
@@ -294,9 +351,23 @@ def create_gui():
 
         # grade distribution
         elif event == grade_distribution_button.get_text():
-            grade_distribution(values['professor_lastname'], values['course_prefix'],
-                               values['course_number'], values['year'], values['semester'])
+            try:
+                grade_distribution(values['professor_firstname'], values['professor_lastname'], values['course_prefix'],
+                                       values['course_number'], values['year'], values['semester'])
+                grade_error.update('')
+            except:
+                grade_error.update('Error! Grade data not available.')
 
     window.close()
 
-create_gui()
+
+def main():
+    # load the scraped data
+    load_course_data()
+
+    # open the user interface
+    create_gui()
+
+
+if __name__ == "__main__":
+    main()
