@@ -2,6 +2,8 @@
 Makes use of Selenium to scrape information from The University of Texas' database of Course Instructor Surveys (CIS) from Fall 2005 to Summer 2022.
 
 ## Key Files:
+Every .py file in this folder has a comment at the top describing its purpose, but regarding the most important scripts and .txt files:
+
 CIS_URL_scrape.py: Mass scrapes URLs from CIS database and saves them into file. Said file is found at output_urls.txt and a copy is saved at output_urls-orig.txt.
 
 CIS_load_scrape.py: Mass scrapes information loaded from a .txt file of URLs created via CIS_URL_scrape.py, originally found at output_urls.txt. In practice, the program can be modified to run smaller chunks of URLs found in the output_slices folder.
