@@ -1,7 +1,7 @@
 # ME369P-U1-Final-Project
-Selenium Final Project for ME369P
+**Selenium Final Project for ME369P**
 
-Required Libraries (non-native):
+**Required Libraries (non-native):**
 - Selenium
   - Install the library via pip:
     - Pip install selenium
@@ -19,11 +19,11 @@ Required Libraries (non-native):
   - Install via pip::
     - Pip install <library name>
 
-Instructions for Running GUI:
+**Instructions for Running GUI:**
 - Open the user_interface.py file and click run
 - Be patient as the scraped data is loaded before the GUI is displayed
 
-Instructions for updating the database:
+**Instructions for updating the database:**
 - professor_sentiment (Rate My Professor):
   - Edit the rmp_scraper_config.json file to change scraping settings, locations, and urls
   - Run the test_rmpScraper.py file, this will take a long time. Progress is displayed in the terminal via progress bars.
