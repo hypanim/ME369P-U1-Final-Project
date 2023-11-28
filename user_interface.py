@@ -24,7 +24,6 @@ def load_course_data():
 
     for subdir, dirs, files in os.walk(course_eval_dir):
         for file in files:
-            print(file)
             with open(os.path.join(subdir, file), encoding="UTF8") as f:
                 for line in f:
                     d = eval(line)
@@ -35,7 +34,7 @@ def load_course_data():
 
                     # remove middle initials from professor names
                     first_name_list = instructor_dict['First Name'].split(' ')
-                    
+
                     eval_list.append([instructor_dict['Last Name'], first_name_list[0], course[0], course[1],
                                       instructor_dict['Unique Number'], year_sem[0], year_sem[1], d['Table1'],
                                       d['Table2'],
