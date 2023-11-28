@@ -17,7 +17,7 @@
     - nltk.download()
 - Numpy, Pandas, PySimpleGUI, Matplotlib, Tqdm
   - Install via pip::
-    - Pip install <library name>
+    - Pip install \<library name>
 
 **Instructions for Running GUI:**
 - Open the user_interface.py file and click run
