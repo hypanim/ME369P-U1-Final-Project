@@ -44,6 +44,7 @@
 - grade_distribution:
   - Open the UT Reports website and collect the URLs for the .csv files for school years you would like to collect data for.
     - UT Reports website url: https://reports.utexas.edu/spotlight-data/ut-course-grade-distributions
+    - Example URL: https://iq-analytics.austin.utexas.edu/vizql/w/Gradedistributiondashboard/v/Externaldashboard-Crosstab/vudcsv/sessions/AF7094644FEA48DC8342D05C95886850-1:0/views/16861249536744109730_12100274518980499666?summary=true
   - Run the grade_scrape.py file with the URL and filename as function parameters
 - course_evaluation:
   - Key files:
