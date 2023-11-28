@@ -12,7 +12,7 @@ mpl.use('Qt5Agg')
 def load_course_data():
     # get file path
     curr_directory = os.path.dirname(os.path.realpath(__file__))
-    course_eval_dir = os.path.join(curr_directory, 'course_evaluation/data/')
+    course_eval_dir = os.path.join(curr_directory, 'course_evaluation/complete_dictionaries/')
 
     # helper function
     def course_number_regex(s):
@@ -24,6 +24,7 @@ def load_course_data():
 
     for subdir, dirs, files in os.walk(course_eval_dir):
         for file in files:
+            print(file)
             with open(os.path.join(subdir, file), encoding="UTF8") as f:
                 for line in f:
                     d = eval(line)
