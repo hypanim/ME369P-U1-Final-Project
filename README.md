@@ -23,5 +23,14 @@ Instructions for Running GUI:
 - Open the user_interface.py file and click run
 - Be patient as the scraped data is loaded before the GUI is displayed
 
-- 
+Instructions for updating the database:
+- professor_sentiment (Rate My Professor):
+  - Edit the rmp_scraper_config.json file to change scraping settings, locations, and urls
+  - Run the test_rmpScraper.py file, this will take a long time. Progress is displayed in the terminal via progress bars.
+- grade_distribution:
+  - Open the UT Reports website and collect the URLs for the .csv files for school years you would like to collect data for.
+    - UT Reports website url: https://reports.utexas.edu/spotlight-data/ut-course-grade-distributions
+  - Run the grade_scrape.py file with the URL and filename as function parameters
+- course_evaluation:
+  - TBD
 
