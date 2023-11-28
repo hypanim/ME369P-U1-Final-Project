@@ -1,0 +1,33 @@
+Some URLs failed to pass the program due to containing no data (meaning zero students responded) in some areas. 
+These URLs were omitted from the final data in order to avoid outliers.
+
+William Beckner: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005958595000001
+Wendy Dunnam: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900395000001
+Mary Eberlein: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006692105000002
+James Faircloth: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900320000002
+Lori Gossett: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006672875000002
+Christopher Harte: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006944940000002
+Nancy Kwallek: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900400000002
+Nancy Kwallek: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900410000002
+Carl Matthews: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900415000002
+John Messerly: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006692110000002
+Mary L Rice-Lively: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006681660000003
+Marla Smith: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900370000002
+Melissa Ann Smith: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2009934750000001
+
+Additionally, as seen in output_slices/output_part_etc.txt, there are some links that were tripped up due to naming conventions.
+
+The format for the below links is: "CIS_Website_Name" -> Discovered_Name
+
+"Bougleux Pena Ribeiro De" -> Larissa Bougleux
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2021945480000001
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2022244625000001
+"Maximo-Alexandrino-Noguei" -> Davi Maximo Alexandrino Nogueira
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2010257100000001
+*** "Pinheiro De Freire Medeir" -> Bianca Freire-Medeiros
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2016940457000002
+*** "Shayesteh" -> Farkhondeh Shayesteh
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2009686080000001
+***
+
+Unlike the previous links, which are missing data, these links have been hardcoded in the final instructor_data.txt file.
