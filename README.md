@@ -8,7 +8,11 @@
 - Install Mozilla Firefox:
   - Go to https://www.mozilla.org/en-US/firefox/new/ and install the latest browser for your operating system
 - Install the webdriver for Firefox: 
-  - Go to https://github.com/mozilla/geckodriver/releases and install the latest version of the driver compatible with the     installed Firefox browser
+  - Go to https://github.com/mozilla/geckodriver/releases and install the latest version of the driver compatible with the installed Firefox browser
+- Install Google Chrome:
+  - Go to https://support.google.com/chrome/answer/95346?hl=en&co=GENIE.Platform%3DDesktop and install the latest browser for your operating system
+- Install the webdriver for Google Chrome:
+  - Go to https://chromedriver.chromium.org/downloads andd install the latest version of the driver compatible with the installed Google Chrome browser
 - NLTK
   - Install via pip:
     - pip install nltk
@@ -47,12 +51,12 @@
       - CIS_load_scrape.py: Mass scrapes information loaded from a .txt file of URLs created via CIS_URL_scrape.py, originally found at output_urls.txt. In practice, the program can be modified to run smaller chunks of URLs found in the output_slices folder.
       - output_urls.txt: The entire list of URLs for CIS pages within the UT database. Needs a UT EID to access. There's 191,054 surveys in total. In case something happens to the output_urls.txt file, a copy is saved as output_urls-orig.txt.
       - instructor_data1a.txt: File containing all of the dictionaries of data extracted from the 7,885 URLs in output_part_1a.txt found in the output_slices folder. All processed data will be in this form; use it to help build the GUI around.
-    - References for setup:
-        -  https://www.youtube.com/watch?v=Zrx8FSEo9lk
-        -  https://chromedevtools.github.io/devtools-protocol/
-    - Running the program:
-        - Install Selenium and Webdriver (https://googlechromelabs.github.io/chrome-for-testing/). Download Python (https://www.python.org/downloads/) if needed and run 'pip install selenium'. Run Webdriver when installed.
-        - In your terminal window, change your directory to the Google Chrome application itself. (For me, this is "cd /Applications/Google\ Chrome.app").
-        - In your terminal window, run your Chrome application, followed by the remote debugging port information, and then the user data directory you've created for this new debugging window, which can just be an empty folder that Chrome will fill in itself. (For me, this is ""/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 --user-data-dir=/Users/CadeWetherill/Desktop/dev/ChromeData"). Upon completing this step, a new Google Chrome window should open.
-        - Open any UT page and log-in with your UT EID and passcode. You'll need to go through Duo as well. This should keep your log-in cookies saved to this debugging window, allowing you access to the UT database pages with Selenium. Once logged in, the code should be able to be ran based on changing the input values in the CIS_load_scrape.py file. DO NOT CLOSE THIS WINDOW! Both CIS_load_scrape.py and CIS_URL_scrape.py should be run while this window remains open.
+  - References for setup:
+      - https://www.youtube.com/watch?v=Zrx8FSEo9lk
+      - https://chromedevtools.github.io/devtools-protocol/
+  - Running the program:
+      - Install Selenium and Webdriver (https://googlechromelabs.github.io/chrome-for-testing/). Download Python (https://www.python.org/downloads/) if needed and run 'pip install selenium'. Run Webdriver when installed.
+      - In your terminal window, change your directory to the Google Chrome application itself. (For me, this is "cd /Applications/Google\ Chrome.app").
+      - In your terminal window, run your Chrome application, followed by the remote debugging port information, and then the user data directory you've created for this new debugging window, which can just be an empty folder that Chrome will fill in itself. (For me, this is ""/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9222 --user-data-dir=/Users/CadeWetherill/Desktop/dev/ChromeData"). Upon completing this step, a new Google Chrome window should open.
+      - Open any UT page and log-in with your UT EID and passcode. You'll need to go through Duo as well. This should keep your log-in cookies saved to this debugging window, allowing you access to the UT database pages with Selenium. Once logged in, the code should be able to be ran based on changing the input values in the CIS_load_scrape.py file. DO NOT CLOSE THIS WINDOW! Both CIS_load_scrape.py and CIS_URL_scrape.py should be run while this window remains open.
 
