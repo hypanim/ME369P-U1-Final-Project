@@ -33,7 +33,10 @@ def load_course_data():
                     course = course_number_regex(instructor_dict['Course Number'])
                     year_sem = instructor_dict['Semester'].split(" ")
 
-                    eval_list.append([instructor_dict['Last Name'], instructor_dict['First Name'], course[0], course[1],
+                    # remove middle initials from professor names
+                    first_name_list = instructor_dict['First Name'].split(' ')
+                    
+                    eval_list.append([instructor_dict['Last Name'], first_name_list[0], course[0], course[1],
                                       instructor_dict['Unique Number'], year_sem[0], year_sem[1], d['Table1'],
                                       d['Table2'],
                                       d['Table3']])
