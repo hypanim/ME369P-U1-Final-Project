@@ -14,6 +14,9 @@ John Messerly: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_m
 Mary L Rice-Lively: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2006681660000003
 Marla Smith: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900370000002
 Melissa Ann Smith: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2009934750000001
+Riley G Triggs: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900315000002
+Lois Weinthal: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900405000002
+Lois Weinthal: https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2005900390000001
 
 Additionally, as seen in output_slices/output_part_etc.txt, there are some links that were tripped up due to naming conventions.
 
@@ -24,10 +27,11 @@ https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=202194
 https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2022244625000001
 "Maximo-Alexandrino-Noguei" -> Davi Maximo Alexandrino Nogueira
 https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2010257100000001
-*** "Pinheiro De Freire Medeir" -> Bianca Freire-Medeiros
+"Pinheiro De Freire Medeir" -> Bianca Freire-Medeiros
 https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2016940457000002
-*** "Shayesteh" -> Farkhondeh Shayesteh
+"Shayesteh" -> Farkhondeh Shayesteh
 https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2009686080000001
-***
+"Sorelle-Miner Danielle A" -> Danielle A Sorelle-Miner 
+https://utdirect.utexas.edu/ctl/ecis/results/view_results.WBX?s_me_cis_id=2007957245000001
 
 Unlike the previous links, which are missing data, these links have been hardcoded in the final instructor_data.txt file.
