@@ -40,7 +40,7 @@
       - thread_count: The number of threads that you want spawned if multithreading_enabled is true. Be careful not to make this number too high or crashing may occur.
       - error_file: name of the file to store any professor urls that the scraper had an issue scraping. Can be due to a variety of reasons. Does not need to be changed.
       - finished_file: name of the file to store all professor urls that are successfully stored. Does not need to be changed.
-  - Run the test_rmpScraper.py file, this will take a long time. Progress is displayed in the terminal via progress bars.
+  - Run the run_rmpScraper.py file, this will take a long time. Progress is displayed in the terminal via progress bars.
 - grade_distribution:
   - Open the UT Reports website and collect the URLs for the .csv files for school years you would like to collect data for.
     - UT Reports website url: https://reports.utexas.edu/spotlight-data/ut-course-grade-distributions
